@@ -40,8 +40,20 @@ export function objectFieldsList(obj1, obj2, obj3) {
 export function objectClone(obj, count) {
     let total = [];
     for (let i = 0; i < count; i++) {
-        let clone = { id: i, ...obj };
+        let clone = { id: i, ...clone_object(obj) };
         total.push(clone);
     }
     return total;
+}
+
+function clone_object(obj) {
+    let clone = {};
+    for (let key in obj) {
+        if (typeof obj[key] == 'object') {
+            clone[key] = clone_object(obj[key]);
+        } else {
+            clone[key] = obj[key];
+        }
+    }
+    return clone;
 }
